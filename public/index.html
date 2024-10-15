@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shaka Player Demo</title>
+    <script src="shaka-player.compiled.js"></script>
+  </head>
+  <body>
+    <video id="video" width="640" controls autoplay></video>
+    <script>
+      // Initialize the Shaka Player
+      function initApp() {
+        // Check for browser support
+        if (shaka.Player.isBrowserSupported()) {
+          // Everything looks good!
+          initPlayer();
+        } else {
+          // This browser does not have the minimum set of APIs we need.
+          console.error("Browser not supported!");
+        }
+      }
+
+      async function initPlayer() {
+        // Create a Player instance.
+        const video = document.getElementById("video");
+        const player = new shaka.Player(video);
+
+        // Attach player to the window to make it easy to access in the JS console.
+        window.player = player;
+
+        // Listen for error events.
+        player.addEventListener("error", onErrorEvent);
+
+        // Try to load a manifest.
+        // This is an asynchronous process.
+        try {
+          await player.load("/master.m3u8"); // Replace with your m3u8 URL
+          // await player.load('/dash-test2/out.mpd') // Replace with your m3u8 URL
+          console.log("The video has now been loaded!");
+        } catch (e) {
+          onError(e);
+        }
+      }
+
+      function onErrorEvent(event) {
+        onError(event.detail);
+      }
+
+      function onError(error) {
+        // Log the error.
+        console.error("Error code", error.code, "object", error);
+      }
+
+      document.addEventListener("DOMContentLoaded", initApp);
+    </script>
+  </body>
+</html>

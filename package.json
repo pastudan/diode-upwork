@@ -1,0 +1,11 @@
+{
+  "name": "diode-upwork",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.21.1",
+    "fluent-ffmpeg": "^2.1.3"
+  }
+}
