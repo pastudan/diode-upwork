@@ -4,6 +4,7 @@ import path from "path";
 import mime from "mime";
 import { fileURLToPath } from "url";
 
+const PORT = process.env.PORT || 3313;
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -81,7 +82,7 @@ app.get("/videos/:filename", function (req, res) {
   });
 });
 
-// Start the server on port 3000
-app.listen(3000, function () {
-  console.log("Server is listening on port 3000");
+// Start the server on PORT
+app.listen(PORT, function () {
+  console.log(`Server is listening on port ${PORT}`);
 });
