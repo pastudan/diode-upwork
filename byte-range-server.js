@@ -81,33 +81,6 @@ app.get("/videos/:filename", function (req, res) {
   });
 });
 
-// Route to handle OPTIONS requests for video files
-app.options("/videos/:filename", function (req, res) {
-  const filePath = path.join(__dirname, "videos", req.params.filename);
-
-  // Check if the file exists
-  fs.stat(filePath, function (err, stats) {
-    if (err) {
-      if (err.code === "ENOENT") {
-        // 404 Error if file not found
-        return res.status(404).send("File not found");
-      }
-      return res.status(500).send(err);
-    }
-
-    const total = stats.size;
-    const contentType = mime.getType(filePath) || "application/octet-stream";
-
-    // Set the response headers with the full size of the video
-    res.set({
-      "Content-Length": total,
-      "Accept-Ranges": "bytes",
-      "Content-Type": contentType,
-    });
-    res.status(200).end();
-  });
-});
-
 // Start the server on port 3000
 app.listen(3000, function () {
   console.log("Server is listening on port 3000");
