@@ -20,11 +20,15 @@ Next I made a webserver that:
 1. Generates an HLS manifest based on the CUE file.
 1. Muxes the segments on demand. To do this we use FFmpeg and read `segments/<segment_number>.mkv`, while piping the output to the HTTP response.
 
-Everything _ALMOST_ works perfectly, however there is a slight gap / delay between the segments during playback. My guess is that FFmpeg isn't handling timecodes correctly since I broke up the MKV files, but it is not clear to me exactly why this is. In the example, look for the gap / glitchyness between 0:07 and 0:08.
+- Everything _ALMOST_ works perfectly, however there is currently a slight gap / delay between the segments during playback.
+- This gap is noticeable between the 0:07 and 0:08 mark, suggesting potential issues with timecode handling during playback
+- My guess is that FFmpeg isn't handling timecodes correctly because I broke up the MKV files.
 
-If you can help me track down the cause and possible solutions that would be great.
+I'm seeking assistance from an experienced developer to pinpoint the root cause of these gaps and provide possible solutions to ensure a seamless streaming experience.
 
-## Workflow
+## Development Workflow
 
-1. `node mkv-fragmenter.js sample_turtle_hevc.mkv` NOTE this also runs mkvextract and writes out cues.txt. Feel free to try this on your own videos
-1. `node server.js`
+To test the current setup, follow these steps:
+
+1. Run `node mkv-fragmenter.js sample_turtle_hevc.mkv`. This also runs mkvextract as a child process, and writes out cues.txt. Feel free to try this on your own videos
+1. Launch the server with `node server.js` and navigate to `http://localhost:3000` to observe playback.
